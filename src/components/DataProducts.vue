@@ -44,12 +44,13 @@ const nameSelect = ref("");
 
 const filterData = computed(() => {
   const filterArr = tableArray.value.filter((item) => {
-    if (item.categoryName.toLowerCase()) {
-      return item.categoryName.toLowerCase() === nameSelect.value.toLowerCase();
-    } else {
-      return tableArray.value;
-    }
+    return item.categoryName
+      .toLowerCase()
+      .includes(nameSelect.value.toLowerCase());
   });
+  if (filterArr.length === 0) {
+    return tableArray.value;
+  }
   return filterArr;
 });
 
@@ -72,7 +73,6 @@ const fetchData = async () => {
   });
 
   tableArray.value = mapData;
-  console.log(data);
 };
 
 const dataCategory = async () => {
